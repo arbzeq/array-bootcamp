@@ -117,16 +117,28 @@ console.log(str.substring(-7, str.length));
 Advanced methods ( high order methods )
 
 .filter()
-*/
+
 let numArray = [23, 45, 5, 62, 1, 21, 3, 54];
 
 
 //I arrayen ovan, filtera fram alla nummer över 5.
-let filteredArray = numArray.filter((number) =>  number > 5);
-console.log(filteredArray);
 
-/*
-I arrayen ovan, filtera fram alla nummer under 5.
+function filterTheArray(number, index) {
+    return number > 5 && index > 2;
+}
+
+
+let filteredArrayNormal = numArray.filter(filterTheArray);
+console.log(filteredArrayNormal);
+
+let filteredArrayAnonymous = numArray.filter((number) =>  number > 5);
+console.log(filteredArrayAnonymous);
+
+
+//I arrayen ovan, filtera fram alla nummer under 5.
+let filteredArrayBelow5 = numArray.filter((number, index) =>  number < 5);
+console.log(filteredArrayBelow5);
+*/
 
 let persons = [
     {
@@ -154,38 +166,96 @@ let persons = [
         age: 3
     }
 ]
-Skriv ut alla namn som är 18 år eller över från arrayen ovan.
 
-Skriv ut alla namn som är under 18 år från arrayen ovan.
+/*
+//Skriv ut alla namn som är 18 år eller över från arrayen ovan.
+let over18 = persons.filter((person) => person.age >= 18 );
+console.log(over18)
+//Skriv ut alla namn som är under 18 år från arrayen ovan.
+let under18 = persons.filter((person) => person.age < 18 );
+console.log(under18)
+
 
 .sort()
+
 let arr = ['beta', 'alfa', 'gamma'];
-Sortera ovanstående array alfabetisk.
+//Sortera ovanstående array alfabetisk.
+let sorted_arr = arr.sort();
+console.log(sorted_arr);
 let nums = [1,5,7,9,3,4,2,6,8];
-Sortera ovanstående array numeriskt.
+//Sortera ovanstående array numeriskt.
+let sorted_nums = nums.sort();
+console.log(sorted_nums);
 
-I person-arrayen ovan, sortera objekten efter ålder, yngst först.
 
-I person-arrayen ovan, sortera objekten efter ålder, äldst först.
+//I person-arrayen ovan, sortera objekten efter ålder, yngst först.
+let personsSortedByAge = persons.sort((a, b) => a.age - b.age);
+console.log(personsSortedByAge);
+//I person-arrayen ovan, sortera objekten efter ålder, äldst först.
+let personsSortedByAgeReverse = persons.sort((a, b) => b.age - a.age);
+console.log(personsSortedByAgeReverse);
 
-I person-arrayen ovan, sortera objekten i bokstavsordning efter deras namn
+//I person-arrayen ovan, sortera objekten i bokstavsordning efter deras namn
+function nameSortFunction(a, b) {
+    if(a.name > b.name){
+        return 1;
+    }
+    else if (b.name > a.name) {
+        return -1;
+    }
+    return 0;
+}
+let personsSortedByName = persons.sort(nameSortFunction);
+console.log(personsSortedByName);
+
+
 
 .map()
-I person-arrayen ovan, gör om alla namn till versaler.
 
-I person-arrayen ovan, spegelvänd alla namn.
+function personToUpperFunction(person) {
+    return {name: person.name.toUpperCase(),
+        age: person.age};
+}
+//I person-arrayen ovan, gör om alla namn till versaler.
+let personMapUpper = persons.map(personToUpperFunction);
+console.log(personMapUpper);
+
+let personMapUpperAnonymous = persons.map((person) => ({name: person.name.toUpperCase(),
+                                                        age: person.age}));
+console.log(personMapUpperAnonymous);
+//I person-arrayen ovan, spegelvänd alla namn.
+function reflectNames(person) {
+    obj = {name: [...person.name].reduce((x,y) => y.concat(x)),
+        age: person.age
+    }
+    return obj;
+}
+
+let personMapReflected = persons.map(reflectNames);
+console.log(personMapReflected);
+
 
 Loop arrays
+*/
 let fruits = ['apelsin', 'päron', 'äpple', 'kiwi'];
-Loopa ut följande array med en forEach()-loop. console.log() varje ord.
+//Loopa ut följande array med en forEach()-loop. console.log() varje ord.
+console.log("--------------forEach--------------");
+fruits.forEach(element => console.log(element));
+//Loopa ut följande array med en for of-loop. console.log() varje ord.
+console.log("--------------for of--------------");
+for(element of fruits){
+    console.log(element);
+};
+//Loopa ut följande array med en for-loop. console.log() varje ord.
+console.log("--------------for in--------------");
+for(i in fruits){
+    console.log(fruits[i]);
+}
 
-Loopa ut följande array med en for of-loop. console.log() varje ord.
-
-Loopa ut följande array med en for-loop. console.log() varje ord.
-
-Loopa ut följande array. För varje varv i loopen ska du också skriva ut index. ex:
-
+/*Loopa ut följande array. För varje varv i loopen ska du också skriva ut index. ex:
+console.log("--------------forEach with index--------------");
 0 - apelsin
 1 - päron
 ...
 */
+fruits.forEach((element, index) => console.log(index + " - " + element));
